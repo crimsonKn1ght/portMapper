@@ -3,7 +3,7 @@ Port Scanner
 
 Download the tool with following command from shell:
 ```
-git clone https://github.com/confusedHatHacker/dirEnum
+https://github.com/confusedHatHacker/portMapper
 ```
 
 After cloning change directories and go to dirEnum folder. Run the following command from shell:
