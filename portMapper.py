@@ -10,16 +10,16 @@ import argparse
 class argcheck:
 	def __init__(self):
 		self.example=\
-		f'example: python {sys.argv[0]} -i 192.168.0.1\n'
+		f'example: python {sys.argv[0]} -i 192.168.0.1 -p 200-300\n	 python {sys.argv[0]} -i 192.168.0.1 -p 100-400,443'
 
 	def Argcheck(self):
-		parser = argparse.ArgumentParser(description="Tool for web page & directory discovery and also good \nfor fuzzing or sub-domain enumeration", usage=f"python {sys.argv[0]} -u <url[:port]> -w <wordlist> [options]", epilog=self.example, formatter_class=argparse.RawTextHelpFormatter)
+		parser = argparse.ArgumentParser(description="Tool for web page & directory discovery and also good \nfor fuzzing or sub-domain enumeration", usage=f"python {sys.argv[0]} -i <ip> -p <ports range>", epilog=self.example, formatter_class=argparse.RawTextHelpFormatter)
 		parser.add_argument('-i', '--ip', metavar='', dest='ip', help='Enter ip')
 		parser.add_argument('-p', '--ports', metavar='', dest='ports', help='Enter port range')
 		parser.add_argument('-v', '--version', action='version', version='Version: 1.0', help=f'Show version of {sys.argv[0]}')
 		args = parser.parse_args()
 
-		if len(sys.argv) <= 2:
+		if len(sys.argv) < 1:
 			parser.print_help()
 			sys.exit()
 
@@ -94,7 +94,8 @@ if __name__=='__main__':
 
 	arguments = argcheck()
 	args = arguments.Argcheck()
-
+	
+	ports = ['1-1000']
 	ports = args.ports.split(',')
 
 	portDisc = portDiscovery(args.ip, ports)
