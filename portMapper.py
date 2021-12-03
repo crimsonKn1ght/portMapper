@@ -13,8 +13,8 @@ class argcheck:
 		f'example: python {sys.argv[0]} -i 192.168.0.1 -p 200-300\n	 python {sys.argv[0]} -i 192.168.0.1 -p 100-400,443'
 
 	def Argcheck(self):
-		parser = argparse.ArgumentParser(description="Tool for web page & directory discovery and also good \nfor fuzzing or sub-domain enumeration", usage=f"python {sys.argv[0]} -i <ip> -p <ports range>", epilog=self.example, formatter_class=argparse.RawTextHelpFormatter)
-		parser.add_argument('-i', '--ip', metavar='', dest='ip', help='Enter ip')
+		parser = argparse.ArgumentParser(description="Tool for port scanning and returning service information", usage=f"python {sys.argv[0]} -i <ip> -p <ports range>", epilog=self.example, formatter_class=argparse.RawTextHelpFormatter)
+		parser.add_argument('-i', '--ip', metavar='', dest='ip', help='Enter ip/domain')
 		parser.add_argument('-p', '--ports', metavar='', dest='ports', help='Enter port range')
 		parser.add_argument('-v', '--version', action='version', version='Version: 1.0', help=f'Show version of {sys.argv[0]}')
 		args = parser.parse_args()
@@ -33,7 +33,7 @@ class portDiscovery:
 
 	def banner(self):
 		border = '='*100+'\n'
-		creator = 'DirEnum created by Gourab Roy(@confusedHatHacker)\nVersion: 1.0\nMeant for legal use only!\n'
+		creator = 'portMapper created by Gourab Roy(@confusedHatHacker)\nVersion: 1.0\nMeant for legal use only!\n'
 		settings = f'Details:\n==> ip/domain: {self.ip}\n==> port range: {self.ports}\n'
 		prologue = '\nStarting port Scanning:\n'
 		print('\n'+border+creator+border+settings+border+prologue)
@@ -95,9 +95,11 @@ if __name__=='__main__':
 	arguments = argcheck()
 	args = arguments.Argcheck()
 	
-	ports = ['1-1000']
-	ports = args.ports.split(',')
-
+	try:
+		ports = args.ports.split(',')
+	except:
+		ports = ['1-1000']
+		
 	portDisc = portDiscovery(args.ip, ports)
 	portDisc.banner()
 	portDisc.run_scan(400)
